@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Climate Change Alert</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #2980b9, #6dd5fa);
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+        .alert {
+            background-color: #e74c3c;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: none;
+        }
+        .check-area {
+            background-color: #ffffff22;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Smart Climate Change Alert System</h2>
+
+    <div class="alert" id="rainAlert">
+        <strong>Alert!</strong> It's Raining. Expected to stop in <span id="stopTime"></span> minutes.
+    </div>
+
+    <div class="check-area">
+        <h3>Check Climate Condition</h3>
+        <input type="text" id="locationInput" placeholder="Enter your location">
+        <button onclick="checkClimate()">Check Condition</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function checkClimate() {
+            var location = document.getElementById("locationInput").value;
+            var result = document.getElementById("result");
+            var alertBox = document.getElementById("rainAlert");
+            var stopTime = document.getElementById("stopTime");
+
+            if(location === "") {
+                result.innerHTML = "Please enter your location.";
+                alertBox.style.display = "none";
+                return;
+            }
+
+            // Simulated Data
+            var weatherOptions = ["Sunny", "Rainy"];
+            var weather = weatherOptions[Math.floor(Math.random() * weatherOptions.length)];
+            var windSpeed = (Math.random() * 30).toFixed(2) + " km/h";
+            var temperature = (20 + Math.random() * 15).toFixed(1) + "°C";
+            var currentHour = new Date().getHours();
+            var timeOfDay = (currentHour >= 6 && currentHour < 18) ? "Day Time" : "Night Time";
+
+            result.innerHTML = `
+                Location: ${location} <br>
+                Weather: ${weather} <br>
+                Wind Speed: ${windSpeed} <br>
+                Temperature: ${temperature} <br>
+                Time: ${timeOfDay}
+            `;
+
+            if(weather === "Rainy") {
+                var rainStopIn = Math.floor(Math.random() * 30) + 10; // 10 to 40 min
+                stopTime.innerHTML = rainStopIn;
+                alertBox.style.display = "block";
+            } else {
+                alertBox.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
